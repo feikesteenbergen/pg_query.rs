@@ -1,8 +1,11 @@
 use crate::*;
 
 pub use protobuf::node::Node as NodeEnum;
+use serde::Serialize;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
+#[cfg(feature = "serialize")]
+#[derive(Serialize)]
 pub enum Context {
     None,
     Select,
