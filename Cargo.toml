@@ -32,4 +32,5 @@ pretty_assertions = "1.4.0"
 regex = "1.6.0"
 
 [features]
+default = ["serialize"]
 serialize = []

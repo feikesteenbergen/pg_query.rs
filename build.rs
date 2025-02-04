@@ -67,7 +67,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Generate the protobuf definition
     let mut prost_build = prost_build::Config::new();
     if env::var("CARGO_FEATURE_SERIALIZE").is_ok() {
-        prost_build.type_attribute(".", "#[derive(serde::Serialize)]");
+        prost_build
+            .type_attribute(".", "#[derive(serde::Serialize)]")
+            .type_attribute(".", r#"#[serde(skip_serializing_if = "Option::is_none")]"#)
+            .type_attribute(".", r#"#[serde(skip_serializing_if = "<[_]>::is_empty")]"#);
     }
 
     prost_build.compile_protos(&[&out_protobuf_path.join(LIBRARY_NAME).with_extension("proto")], &[&out_protobuf_path])?;
